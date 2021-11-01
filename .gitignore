@@ -1,0 +1,11 @@
+node_modules
+node_modules/.cache
+package-lock.json
+.DS_Store
+log/
+*.log
+.jshintrc
+.env
+
+/public/images/
+tmp/restart.txt

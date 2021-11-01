@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <%- include('partials/head.ejs') %>
+
+</head>
+
+<body class="header-fixed sidebar-fixed sidebar-dark header-light" id="body">
+
+  <script>
+    NProgress.configure({ showSpinner: false });
+    NProgress.start();
+  </script>
+
+
+  <div id="toaster"></div>
+
+
+  <div class="wrapper">
+
+    <div class="page-wrapper">
+      <%- include('partials/header.ejs') %>
+
+      <div class="content-wrapper">
+        <div class="content">
+          <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+              <div class="card card-default">
+                <div class="card-header card-header-border-bottom">
+                  <h2>Transaction Entry</h2>
+                </div>
+                <div class="card-body">
+
+
+                  <form id="trxform" role="form" method="POST" action="/transaction" enctype="multipart/form-data">
+
+
+                    <div class="form-group" id="dvtransdate">
+                      <label>Trade Date</label>
+                      <div class="no-col-space">
+                        <input type="date" class="form-control" id="trxtransdate" name="trxtransdate"
+                          placeholder="yyyy-mm-dd" tabindex="1" required>
+                      </div>
+                    </div>
+
+                    <div class="form-group" id="dvaccount">
+                      <div class="row mb-4">
+                        <div class="col-xl-5 col-md-5">
+                          <label>Select Account</label>
+
+                          <select class="form-control" id="trxaccount" name="trxaccount" tabindex="2" required>
+                          </select>
+                          <span class="text-success font-size-16" id="spnbalance">Select Account</span>
+                        </div>
+
+
+                        <div class="col-xl-7 col-md-7">
+                          <label>Select Transaction Type</label>
+
+                          <select class="form-control" id="trxtranstype" name="trxtranstype" tabindex="3" required>
+                            <option value="BUY" selected>BUY</option>
+                            <option value="SALE">SALE</option>
+                            <option value="RECEIPT">RECEIPT</option>
+                            <option value="PAYMENT">PAYMENT</option>
+                            <option value="CASH DIVIDENT">CASH DIVIDENT</option>
+                            <option value="STOCK DIVIDENT">STOCK DIVIDENT</option>
+                            <option value="RIGHT SHARE">RIGHT SHARE</option>
+                          </select>
+                        </div>
+
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-xl-5 col-md-5">
+                          <label>Trading Code</label>
+
+                          <input type="text" class="form-control" id="trxtradingcode" name="trxtradingcode" tabindex="4"
+                            placeholder="Trading Code" placeholder="">
+                        </div>
+                        <div class="col-xl-7 col-md-7">
+                          <label for="trxcomments">Particular</label>
+
+                          <input type="text" class="form-control" id="trxcomments" name="trxcomments"
+                            placeholder="Particular" maxlength="150" tabindex="5">
+                        </div>
+                      </div>
+                    </div>
+
+
+
+                    <div class="form-group" id="dvquantity">
+                      <div class="row">
+                        <div class="col-xl-5 col-md-5">
+                          <label>Quantity</label>
+                          <input type="number" class="form-control" id="trxquantity" name="trxquantity" tabindex="6"
+                            step="1" placeholder="Quantity" readonly>
+                        </div>
+
+                        <div class="col-xl-7 col-md-7">
+                          <label>Rate</label>
+
+                          <input type="number" class="form-control" id="trxrate" name="trxrate" tabindex="7" min="0"
+                            step=".01" placeholder="Rate" readonly>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group" id="dvtotalprice">
+                      <div class="row">
+                        <div class="col-xl-5 col-md-5">
+
+                          <label>Dividend %</label>
+
+                          <input type="number" class="form-control" id="trxdividendpct" name="trxdividendpct"
+                            placeholder="Dividend" tabindex="8" readonly>
+                        </div>
+                        <div class="col-xl-7 col-md-7">
+                          <label>Total Price</label>
+
+                          <input type="number" class="form-control" id="trxtotalprice" name="trxtotalprice"
+                            placeholder="" readonly>
+
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <div class="form-group" id="dvcommission">
+                      <div class="row">
+                        <div class="col-xl-5 col-md-5">
+                          <label>Comm %</label>
+
+                          <input type="number" class="form-control" id="trxcommissionpct" name="trxcommissionpct"
+                            placeholder="" readonly>
+                        </div>
+
+                        <div class="col-xl-7 col-md-7">
+                          <label>Comm Amount</label>
+
+                          <input type="number" class="form-control" id="trxcommission" name="trxcommission"
+                            placeholder="Commission" readonly>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <div class="form-group" id="dvamount">
+                      <div class="row">
+                        <div class="col-xl-5 col-md-5">
+                          <label>Total Amount</label>
+
+                          <input type="number" class="form-control" id="trxamount" name="trxamount"
+                            placeholder="Total Amount" tabindex="9" placeholder="" readonly>
+
+                        </div>
+
+                        <div class="col-xl-7 col-md-7">
+                          <label>Realized Profit</label>
+
+                          <input type="number" class="form-control" id="trxrealizedprofit" name="trxrealizedprofit"
+                            placeholder="Realized Profit" readonly>
+
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-xl-5 col-md-5">
+                          <label>Avg Cost</label>
+
+                          <input type="number" class="form-control" id="trxavgcost" name="trxavgcost" placeholder=""
+                            readonly>
+                        </div>
+
+                        <div class="col-xl-7 col-md-7">
+                          <label>Total Cost</label>
+
+                          <input type="number" class="form-control" id="trxtotalcost" name="trxtotalcost" placeholder=""
+                            readonly>
+                        </div>
+                      </div>
+                    </div>
+
+
+
+                    <input type='hidden' id="trxaccountid" name="trxaccountid" value="" required />
+                    <div class="row">
+                      <div class="col-xl-6 col-md-6">
+                        <button id="btnClearTrx" type="button"
+                          class="mb-1 btn btn-warning btn-right-sidebar-2 btn-reset">
+                          <i class=" mdi mdi-alert-outline mr-1"></i> Clear</button>
+                      </div>
+                      <div class="col-xl-6 col-md-6">
+                        <button id="btnSubmitTrx" name="btnSubmitTrx" type="submit"
+                          class="mb-1 btn btn-success float-right" tabindex="10">
+                          <i class=" mdi mdi-checkbox-marked-outline mr-1"></i> Success</button>
+
+                      </div>
+                    </div>
+                  </form>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
+        <%- include('partials/footer.ejs') %>
+
+
+
+      </div>
+    </div>
+
+    <%- include('partials/scripts.ejs') %>
+    <script src="/public/js/transaction.js"></script>
+
+    <script>
+      $(document).ready(function () {
+      });
+
+
+    </script>
+</body>
+
+</html>

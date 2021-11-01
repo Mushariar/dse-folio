@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <%- include('partials/head.ejs') %>
+</head>
+
+<body class="header-fixed sidebar-fixed sidebar-dark header-light" id="body">
+
+  <script>
+    NProgress.configure({ showSpinner: false });
+    NProgress.start();
+  </script>
+
+
+  <div id="toaster"></div>
+
+
+  <div class="wrapper">
+
+
+
+
+    <div class="page-wrapper">
+      <%- include('partials/header.ejs') %>
+
+      <div class="content-wrapper">
+        <div class="content">
+
+          <div class="row">
+            <div class="col-xl-12 col-lg-12 col-12">
+
+              <div class="card card-default">
+                <div class="card-header card-header-border-bottom">
+                  <h2><% if(data.companyinfo){ %> <%= data.companyinfo.comapnyname %> <% } %></h2>
+                </div>
+                <div class="card-body">
+
+                  <div class="row">
+                    <div class="col-xl-8 col-lg-8 col-12">
+
+                      <% if(data.companyinfo){ %>
+                      <table class="table table-striped companyinfo">
+                        <tbody>
+                          <tr>
+                            <td scope="row">Tranding Code</td>
+                            <td><%= data.companyinfo.companycode %></td>
+                          </tr>
+                          <tr>
+                            <td scope="row">Cash Dividend</td>
+                            <td><%= data.companyinfo.cashdividend %></td>
+                          </tr>
+                          <tr>
+                            <td scope="row">Bonus Issue (Stock Dividend)</td>
+                            <td rowspan="2"><%= data.companyinfo.bonusissue %></td>
+                          </tr>
+                          <tr></tr>
+                          <tr></tr>
+                          <tr>
+                            <td scope="row">Right Issue</td>
+                            <td><%= data.companyinfo.rightissue %></td>
+                          </tr>
+
+                          <tr>
+                            <td scope="row">Sector</td>
+                            <td><%= data.companyinfo.sector %></td>
+                          </tr>
+
+                          <tr>
+                            <td scope="row">Market Category</td>
+                            <td><%= data.companyinfo.category %></td>
+                          </tr>
+
+                          <tr>
+                            <td scope="row">Year End</td>
+                            <td><%= data.companyinfo.yearend %></td>
+                          </tr>
+
+                          <tr>
+                            <td scope="row">Listing Year</td>
+                            <td><%= data.companyinfo.listingyear %></td>
+                          </tr>
+                          <tr>
+                            <td scope="row">Electronic Share</td>
+                            <td><%= data.companyinfo.electronicshare %></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <% } %>
+                    </div>
+
+                    <div class="col-xl-4 col-lg-4 col-12">
+
+
+                      <% if(data.companyinfo){ %>
+                      <% if(data.companyinfo.currentprice){ %>
+                      <table class="table table-striped companyinfo">
+                        <tbody>
+                          <tr>
+                            <td scope="row">Last Trading Price</td>
+                            <td><%= data.companyinfo.currentprice.ltp %></td>
+                          </tr>
+                          <tr>
+                            <td scope="row">Day's Range</td>
+                            <td><%= data.companyinfo.currentprice.low %> - <%= data.companyinfo.currentprice.high %>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td scope="row">52 Weeks' Moving Range</td>
+                            <td><%= data.companyinfo.yearlow %> - <%= data.companyinfo.yearhigh %>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td scope="row">Closing Price</td>
+                            <td><%= data.companyinfo.currentprice.clsp %></td>
+                          </tr>
+                          <tr>
+                            <td scope="row">Yesterday's Closing Price</td>
+                            <td><%= data.companyinfo.currentprice.ycp %></td>
+                          </tr>
+                          <tr>
+                            <td scope="row">Change*</td>
+                            <td><%= data.companyinfo.currentprice.change %></td>
+                          </tr>
+                          <tr>
+                            <td scope="row">Day's Trade (Nos.)</td>
+                            <td><%= data.companyinfo.currentprice.trade %></td>
+                          </tr>
+
+                          <tr>
+                            <td scope="row">Day's Value (mn)</td>
+                            <td><%= data.companyinfo.currentprice.valuemn %></td>
+                          </tr>
+                          <tr>
+                            <td scope="row">Day's Volume (Nos.)</td>
+                            <td><%= data.companyinfo.currentprice.volume %></td>
+                          </tr>
+                          <tr></tr>
+                        </tbody>
+                      </table>
+
+                      <% } %>
+                      <% } %>
+                    </div>
+                  </div>
+
+
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="row">
+            <div class="col-xl-12">
+              <!-- To Do list -->
+              <div class="card card-default" id="todo" data-scroll-height="550">
+                <div class="card-body slim-scroll">
+                  <figure class="highcharts-figure">
+                    <div id="priceChart"></div>
+                  </figure>
+                </div>
+                <div class="mt-3">...</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xl-12">
+              <!-- To Do list -->
+              <div class="card card-default" id="todo" data-scroll-height="550">
+                <div class="card-body slim-scroll">
+                  <figure class="highcharts-figure">
+                    <div id="historyChart"></div>
+                  </figure>
+                </div>
+                <div class="mt-3">...</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
+
+        <!-- include('partials/right-sidebar.ejs') -->
+
+      </div>
+
+      <%- include('partials/footer.ejs') %>
+
+
+
+    </div>
+  </div>
+
+  <%- include('partials/scripts.ejs') %>
+  <script type="text/javascript" src="/public/plugins/highcharts/highstock.js"></script>
+  <script type="text/javascript" src="/public/plugins/highcharts/data.js"></script>
+  <script type="text/javascript" src="/public/plugins/highcharts/drag-panes.js"></script>
+
+  <script>
+    $(document).ready(function () {
+
+      let formdata = '<%- JSON.stringify(data.companyinfo); %>';
+      let companyCode = JSON.parse(formdata).companycode;
+
+      //console.log(formdata);
+
+      getData("/tradehistory1y/" + companyCode, {}, "GET", bindhistorydata);
+
+      function bindhistorydata(ds) {
+        //console.log(ds);
+
+        let data = [];
+        if (ds.tradehist)
+          data = ds.tradehist.archieved_prices;
+
+        //}
+
+        // clsp: "24.2"
+        // high: "24.4"
+        // low: "23.8"
+        // ltp: "24.3"
+        // opnp: "24"
+        // trade: "151"
+        // transdate: "2019-09-22"
+        // valuemn: "2.197"
+        // volume: "91,352"
+        // ycp: "24.1"
+
+        //Highcharts.getJSON('https://demo-live-data.highcharts.com/aapl-graphDataArrayv.json', function (data) {
+
+        //console.log(companyCode);
+
+        // split the data set into graphDataArray and volume
+        var graphDataArray = [],
+          volume = [],
+          dataLength = data.length,
+          // set the allowed units for data grouping
+          groupingUnits = [[
+            'week',                         // unit name
+            [1]                             // allowed multiples
+          ], [
+            'month',
+            [1, 2, 3, 4, 6]
+          ]],
+
+          i = 0;
+
+        for (i; i < dataLength; i += 1) {
+          graphDataArray.push([
+            new Date(data[i].transdate).getTime(), // the date
+            parseFloat(data[i].opnp), // open
+            parseFloat(data[i].high), // high
+            parseFloat(data[i].low), // low
+            parseFloat(data[i].clsp) // close
+          ]);
+
+          volume.push([
+            new Date(data[i].transdate).getTime(), // the date
+            parseFloat(data[i].volume) // the volume
+          ]);
+        }
+
+        //console.log(graphDataArray);
+
+        // create the chart
+        Highcharts.stockChart('historyChart', {
+          credits: {
+            enabled: false
+          },
+          rangeSelector: {
+            selected: 1
+          },
+
+          title: {
+            text: companyCode + ' Historical'
+          },
+
+          yAxis: [{
+            labels: {
+              align: 'right',
+              x: -3
+            },
+            title: {
+              text: companyCode
+            },
+            height: '80%',
+            lineWidth: 2,
+            resize: {
+              enabled: true
+            }
+          }, {
+            labels: {
+              align: 'right',
+              x: -3
+            },
+            title: {
+              text: 'Volume'
+            },
+            top: '65%',
+            height: '35%',
+            offset: 0,
+            lineWidth: 2
+          }],
+
+          tooltip: {
+            split: true
+          },
+          plotOptions: {
+            candlestick: {
+              color: 'red',
+              upColor: 'green'
+            }
+          },
+          series: [{
+            type: 'candlestick',
+            name: companyCode,
+            data: graphDataArray,
+            dataGrouping: {
+              units: groupingUnits
+            }
+          }, {
+            type: 'column',
+            name: 'Volume',
+            data: volume,
+            yAxis: 1,
+            dataGrouping: {
+              units: groupingUnits
+            }
+          }]
+        });
+
+
+
+        Highcharts.stockChart('priceChart', {
+          credits: {
+            enabled: false
+          },
+
+          title: {
+            text: companyCode + ' stock price by day'
+          },
+
+          subtitle: {
+            text: 'Using closing price'
+          },
+
+          xAxis: {
+            gapGridLineWidth: 0
+          },
+
+          rangeSelector: {
+            buttons: [
+              //   {
+              //   type: 'hour',
+              //   count: 1,
+              //   text: '1h'
+              // }, 
+              {
+                type: 'day',
+                count: 7,
+                text: '7D'
+              },
+              {
+                type: 'month',
+                count: 1,
+                text: '1M'
+              },
+              {
+                type: 'month',
+                count: 3,
+                text: '3M'
+              }, {
+                type: 'all',
+                count: 1,
+                text: 'All'
+              }],
+            selected: 1,
+            inputEnabled: false
+          },
+
+          series: [{
+            name: companyCode,
+            type: 'area',
+            data: graphDataArray,
+            gapSize: 5,
+            tooltip: {
+              valueDecimals: 2
+            },
+            fillColor: {
+              linearGradient: {
+                x1: 0,
+                y1: 0,
+                x2: 0,
+                y2: 1
+              },
+              stops: [
+                [0, Highcharts.getOptions().colors[0]],
+                [1, Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+              ]
+            },
+            threshold: null
+          }]
+        });
+
+
+      };
+
+
+    });
+
+  </script>
+</body>
+
+</html>

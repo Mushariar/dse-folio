@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <%- include('partials/head.ejs') %>
+</head>
+
+<body class="header-fixed sidebar-fixed sidebar-dark header-light" id="body">
+
+  <script>
+    NProgress.configure({ showSpinner: false });
+    NProgress.start();
+  </script>
+
+
+  <div id="toaster"></div>
+  <div class="wrapper">
+    <div class="page-wrapper">
+      <%- include('partials/header.ejs') %>
+
+      <div class="content-wrapper">
+        <div class="content">
+          <div class="bg-white border rounded">
+            <div class="row no-gutters">
+              <div class="col-lg-4 col-xl-3">
+                <div class="profile-content-left pt-5 pb-3 px-3 px-xl-5">
+                    <% if(data.login){ %>
+                  <div class="card text-center widget-profile px-0 border-0">
+                    <div class="card-img mx-auto rounded-circle">
+                      <img src="/public/img/user/user.jpg" alt="user image">
+                      <!-- <img onerror="if (this.src != '/public/img/user/user.png') this.src = '/public/img/user/user.png';" src="/public/img/user/<%= data.login.profilpicurl %>"/> -->
+                    </div>
+                    <div class="card-body">
+                      <h4 class="py-2 text-dark"><%= data.login.name %></h4>
+                      <p><%= data.login.email %></p>
+                    </div>
+                  </div>
+                  <% } %>
+
+                  <div class="d-flex justify-content-between ">
+                      <% if(data.useraccount){ %>
+                        <div class="text-center pb-4">
+                          <h6 class="text-dark pb-2"><%= data.useraccount.length %></h6>
+                          <p>Accounts</p>
+                        </div>
+                        <div class="text-center pb-4">
+                          <h6 class="text-dark pb-2"><%= data.login.accTotReceipt %></h6>
+                          <p>Receipt</p>
+                        </div>
+                        <div class="text-center pb-4">
+                          <h6 class="text-dark pb-2"><%= data.login.accTotPayment %></h6>
+                          <p>Payment</p>
+                        </div>
+    
+                        <% } %>
+                  </div>
+
+
+                  <hr class="w-100">
+                  <div class="contact-info pt-4">
+                    <h5 class="text-dark mb-1">Contact Information</h5>
+                    <% if(data.login){ %>
+                    <p class="text-dark font-weight-medium pt-4 mb-2">Email address</p>
+                    <p><%= data.login.email %></p>
+                    <p class="text-dark font-weight-medium pt-4 mb-2">Phone Number</p>
+                    <p>+99 9539 2641 31</p>
+                    <p class="text-dark font-weight-medium pt-4 mb-2">Birthday</p>
+                    <p>Nov 15, 1990</p>
+                    <% } %>
+                  </div>
+                </div>
+
+              </div>
+              <div class="col-lg-8 col-xl-9">
+                <div class="profile-content-right py-5">
+                  <ul class="nav nav-tabs px-3 px-xl-5 nav-style-border" id="accTab" role="tablist">
+
+                    <% if(data.useraccount){ %>
+                    <% for(var i=0; i < data.useraccount.length; i++) { %>
+                    <li class="nav-item acc-nav-item">
+                      <a class="nav-link <% if(i===0){%> active <%} %> " id="acc-tab-nav<%= i %>" data-toggle="tab"
+                        href="#acc-tab-pan<%= i %>" role="tab" aria-controls="profile"
+                        aria-selected="false"><%= data.useraccount[i].boid %></a>
+                    </li>
+                    <% } %>
+                    <% } %>
+
+
+                    <li class="nav-item acc-nav-item">
+                      <a class="nav-link <% if(data.useraccount.length === 0){ %>  active <%} %>" id="settings-nav-link"
+                        data-toggle="tab" href="#settings-tab-pane" role="tab" aria-controls="settings"
+                        aria-selected="false">Add
+                        New Account</a>
+                    </li>
+                  </ul>
+                  <div class="tab-content px-3 px-xl-5" id="accTabContent">
+
+                    <% if(data.useraccount){ %>
+                    <% for(var i=0; i < data.useraccount.length; i++) { %>
+                    <div class="tab-pane fade  <% if(i===0){%>  show active <%} %> acc-tab-pane"
+                      id="acc-tab-pan<%= i %>" role="tabpanel" aria-labelledby="profile-tab">
+                      <div class="mt-5">
+                        <div class="row">
+                          <div class="col-xl-12">
+                            <div class="media widget-media p-4 bg-white border">
+                              <div class="icon rounded-circle mr-4 bg-primary">
+                                <i class="mdi mdi-account-outline text-white "></i>
+                              </div>
+
+                              <div class="media-body align-self-center">
+                                <h4 class="text-primary mb-2"><%= data.useraccount[i].broker_house.brokername %>
+                                  (<%= data.useraccount[i].boid %>)</h4>
+                                <table>
+                                  <tr>
+                                    <th class="pr-2">Balance: </th>
+                                    <td><%= data.useraccount[i].balance %></td>
+                                  </tr>
+                                  <tr>
+                                    <th class="pr-2">Receipt: </th>
+                                    <td><%= data.useraccount[i].receiptamount %></td>
+                                  </tr>
+                                  <tr>
+                                    <th class="pr-2">Payment: </th>
+                                    <td><%= data.useraccount[i].paymentamount %></td>
+                                  </tr>
+                                </table>
+
+                              </div>
+                              <div class="float-right">
+                                <% if(data.useraccount[i].isdefault === 1){ %>
+                                <div class="icon rounded-circle mr-4 bg-success" title="Default account">
+                                  <i class="mdi mdi-check-outline font-size-30 text-white"></i>
+                                </div>
+
+                                <% } %>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-xl-6">
+                            <!-- Notification Table -->
+                            <div class="card card-default" data-scroll-height="550">
+
+
+                              <div class="card-body slim-scroll">
+
+                                <div class="media py-3 align-items-center justify-content-between">
+                                  <div
+                                    class="d-flex rounded-circle align-items-center justify-content-center mr-3 media-icon iconbox-45 bg-warning text-white">
+                                    <i class="mdi mdi-stack-exchange font-size-20"></i>
+                                  </div>
+                                  <div class="media-body pr-3">
+                                    <a class="mt-0 mb-1 font-size-15 text-dark" href="#">BO Account:</a>
+                                    <p><%= data.useraccount[i].boid %></p>
+                                  </div>
+                                  <span class=" font-size-12 d-inline-block">
+                                    <%= data.useraccount[i].boaccountno %></span>
+                                </div>
+
+                                <div class="media pb-3 align-items-center justify-content-between">
+                                  <div
+                                    class="d-flex rounded-circle align-items-center justify-content-center mr-3 media-icon iconbox-45 bg-primary text-white">
+                                    <i class="mdi mdi-cart-outline font-size-20"></i>
+                                  </div>
+                                  <div class="media-body pr-3 ">
+                                    <a class="mt-0 mb-1 font-size-15 text-dark" href="#">Full Name:</a>
+                                    <p><%= data.useraccount[i].fullname %></p>
+                                  </div>
+                                  <span class=" font-size-12 d-inline-block">
+                                    <%= data.useraccount[i].occupation %></span>
+                                </div>
+
+                                <div class="media py-3 align-items-center justify-content-between">
+                                  <div
+                                    class="d-flex rounded-circle align-items-center justify-content-center mr-3 media-icon iconbox-45 bg-success text-white">
+                                    <i class="mdi mdi-email-outline font-size-20"></i>
+                                  </div>
+                                  <div class="media-body pr-3">
+                                    <a class="mt-0 mb-1 font-size-15 text-dark" href="#">Contact:</a>
+                                    <p>Mobile</p>
+                                  </div>
+                                  <span class=" font-size-12 d-inline-block"><i class="mdi mdi-clock-outline"></i>
+                                    <%= data.useraccount[i].mobile %></span>
+                                </div>
+
+
+                              </div>
+                              <div class="mt-3"></div>
+                            </div>
+                          </div>
+                          <div class="col-xl-6">
+                            <!-- Notification Table -->
+                            <div class="card card-default" data-scroll-height="550">
+
+                              <div class="card-body slim-scroll">
+
+                                <div class="media py-3 align-items-center justify-content-between">
+                                  <div
+                                    class="d-flex rounded-circle align-items-center justify-content-center mr-3 media-icon iconbox-45 bg-warning text-white">
+                                    <i class="mdi mdi-stack-exchange font-size-20"></i>
+                                  </div>
+                                  <div class="media-body pr-3">
+                                    <a class="mt-0 mb-1 font-size-15 text-dark" href="#">Bank Account:</a>
+                                    <p><%= data.useraccount[i].bankname %></p>
+                                  </div>
+                                  <span class=" font-size-12 d-inline-block">
+                                    <%= data.useraccount[i].bankaccount %></span>
+                                </div>
+
+                                <div class="media py-3 align-items-center justify-content-between">
+                                  <div
+                                    class="d-flex rounded-circle align-items-center justify-content-center mr-3 media-icon iconbox-45 bg-primary text-white">
+                                    <i class="mdi mdi-cart-outline font-size-20"></i>
+                                  </div>
+                                  <div class="media-body pr-3">
+                                    <a class="mt-0 mb-1 font-size-15 text-dark" href="#">DSE Broker Code:</a>
+                                    <p>brokercode</p>
+                                  </div>
+                                  <span
+                                    class=" font-size-12 d-inline-block"><%= data.useraccount[i].broker_house.brokername %></span>
+                                </div>
+
+                                <div class="media py-3 align-items-center justify-content-between">
+                                  <div
+                                    class="d-flex rounded-circle align-items-center justify-content-center mr-3 media-icon iconbox-45 bg-info text-white">
+                                    <i class="mdi mdi-calendar-blank font-size-20"></i>
+                                  </div>
+                                  <div class="media-body pr-3">
+                                    <a class="mt-0 mb-1 font-size-15 text-dark" href="">Broker Commission: </a>
+                                    <p>Trade commission</p>
+                                  </div>
+                                  <span class=" font-size-12 d-inline-block"><i class="mdi mdi-clock-outline"></i>
+                                    <%= data.useraccount[i].commissionpct %>%</span>
+                                </div>
+
+
+                              </div>
+                              <div class="mt-3"></div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xl-12">
+                            <div class="float-right btn-edit-acc" data-acc-unique-id="<%= data.useraccount[i].boid %>"
+                              title="Edit this account">
+                              <div class="icon rounded-circle bg-info col-12">
+                                <i class="mdi mdi-account-edit text-white font-size-19"></i>
+                              </div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                    <% } %>
+                    <% } %>
+
+                    <div class="tab-pane fade <% if(data.useraccount.length === 0){ %> show active <%} %>  acc-tab-pane"
+                      id="settings-tab-pane" role="tabpanel" aria-labelledby="settings-tab">
+                      <div class="mt-5">
+
+                        <form role="form" method="POST" action="/account" enctype="multipart/form-data">
+
+                          <div class="form-group mb-2">
+                            <label class="control control-checkbox checkbox-success">Set as Default Account
+                              <input type="checkbox" checked="checked" id="accisdefault" name="accisdefault" value="1">
+                              <div class="control-indicator"></div>
+                            </label>
+
+
+                          </div>
+
+                          <div class="row">
+                            <div class="col-lg-6">
+                              <div class="form-group mb-2">
+                                <label for="fullname">Full Name</label>
+                                <input type="text" class="form-control" id="accfullname" name="accfullname" value=""
+                                  required>
+
+                              </div>
+                            </div>
+                            <div class="col-lg-6">
+                              <div class="form-group mb-2">
+                                <label for="accoccupation">Occupation</label>
+                                <input type="text" class="form-control" id="accoccupation" name="accoccupation"
+                                  value="">
+
+                              </div>
+                            </div>
+                          </div>
+
+
+                          <div class="row">
+                            <div class="col-lg-6">
+                              <div class="form-group">
+                                <label for="boid">BOID</label>
+                                <input type="text" class="form-control" id="accboid" name="accboid" required>
+                              </div>
+                            </div>
+
+
+                            <div class="col-lg-6">
+                              <div class="form-group">
+                                <label for="boaccountno">BO Account No.</label>
+                                <input type="text" class="form-control" id="accboaccountno" name="accboaccountno"
+                                  value="">
+                              </div>
+                            </div>
+
+                          </div>
+
+
+                          <div class="row">
+                            <div class="col-lg-6">
+                              <div class="form-group">
+                                <label for="accbrokercode">House</label>
+                                <input type="text" class="form-control" id="accbrokercode" name="accbrokercode" value=""
+                                  required>
+                              </div>
+                            </div>
+                            <div class="col-lg-6">
+                              <div class="form-group">
+                                <label for="acccommissionpct">Commission Percentage</label>
+                                <input type="number" class="form-control" id="acccommissionpct" name="acccommissionpct"
+                                  min="0" step=".01" required>
+                              </div>
+                            </div>
+
+                          </div>
+
+                          <div class="row">
+                            <div class="col-lg-6">
+                              <div class="form-group">
+                                <label for="accmobile">Mobile No.</label>
+                                <input type="text" class="form-control" id="accmobile" name="accmobile" value="">
+                              </div>
+                            </div>
+
+
+                            <div class="col-lg-6">
+                              <div class="form-group">
+                                <label for="accnid">NID</label>
+                                <input type="text" class="form-control" id="accnid" name="accnid" value="">
+                              </div>
+                            </div>
+                          </div>
+
+
+                          <div class="row">
+                            <div class="col-lg-6">
+                              <div class="form-group">
+                                <label for="accbankname">Bank Name</label>
+                                <input type="text" class="form-control" id="accbankname" name="accbankname" value="">
+                              </div>
+                            </div>
+
+
+                            <div class="col-lg-6">
+                              <div class="form-group">
+                                <label for="accbankaccount">Bank Account No.</label>
+                                <input type="text" class="form-control" id="accbankaccount" name="accbankaccount"
+                                  value="">
+                              </div>
+                            </div>
+                          </div>
+
+
+                          <% if(data.login.admin !== 1){ %>
+                          <input type='hidden' id="accuserid" name="accuserid" value="<%= data.login.userid %>"
+                            required />
+                          <input type='hidden' id="accaccountid" name="accaccountid" />
+
+                          <% } else { %>
+                          <div class="row">
+                            <div class="col-lg-6">
+                              <div class="form-group">
+                                <label for="accuserid">User Id</label>
+                                <input type="text" class="form-control" id="accuserid" name="accuserid"
+                                  value="<%= data.login.userid %>" required>
+                              </div>
+                            </div>
+                            <div class="col-lg-6">
+                              <div class="form-group">
+                                <label for="accaccountid">Account Id</label>
+                                <input type="text" class="form-control" id="accaccountid" name="accaccountid">
+                              </div>
+                            </div>
+                          </div>
+                          <% } %>
+
+
+                          <div class="d-flex justify-content-end mt-5">
+                            <button type="submit" class="btn btn-primary mb-2 btn-pill">Submit</button>
+                          </div>
+
+                        </form>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+        <%- include('partials/right-sidebar.ejs') %>
+
+      </div>
+
+      <%- include('partials/footer.ejs') %>
+
+
+
+    </div>
+  </div>
+
+  <%- include('partials/scripts.ejs') %>
+  <script>
+    $(document).ready(function () {
+
+
+      getData("/brokerlist", {}, "GET", loaddata);
+
+      function loaddata(ds) {
+        loadaccbrokerlist(ds.brokerlist);
+      }
+
+
+      function loadaccbrokerlist(ds) {
+        $("#accbrokercode").autocomplete({
+          minLength: 0,
+          maxResults: 5,
+          autoFocus: false,
+          focus: function (event, ui) {
+            $("#accbrokercode").val(ui.item.value);
+            return false;
+          },
+          source: function (request, response) {
+            response($.map(ds, function (item) {
+              if (item.brokercode.toLowerCase().indexOf(request.term.toLowerCase()) > -1
+                ||
+                (item.brokername ? item.brokername.toLowerCase().indexOf(request.term.toLowerCase()) > -1 : false)
+              )
+                return {
+                  label: item.brokername,
+                  value: item.brokercode
+                };
+            }).slice(0, this.options.maxResults)
+            );
+          },
+          change: function (event, ui) {
+            if (ui.item == null) {
+              event.currentTarget.value = '';
+              event.currentTarget.focus();
+            }
+          }
+        }).autocomplete("instance")._renderItem = function (ul, item) {
+          return $('<li class="autocomplete-top-search">')
+
+            .append('<div style="color: #000;">' + item.value + '</div><div style="color: #4c84ff;">' + item.label + '</div>')
+            .appendTo(ul);
+        }
+      }
+
+      $(".btn-edit-acc").on("click", function (event) {
+        //     console.log($(this));
+        let uboid_id = $(this).data("acc-unique-id");
+
+        let data = '<%- JSON.stringify(data.useraccount) %>';
+        data = JSON.parse(data);
+        data.forEach(item => {
+          if (item.boid === uboid_id) {
+            console.log(item)
+
+            item.isdefault == "1" ? $('#accisdefault').prop('checked', true) : $('#accisdefault').prop('checked', false);
+            $("#accfullname").val(item.fullname);
+            $("#accoccupation").val(item.occupation);
+            $("#accboid").val(item.boid);
+            $("#accboaccountno").val(item.boaccountno);
+            $("#accbrokercode").val(item.brokercode);
+            $("#acccommissionpct").val(item.commissionpct);
+            $("#accmobile").val(item.mobile);
+            $("#accnid").val(item.nid);
+            $("#accbankname").val(item.bankname);
+            $("#accbankaccount").val(item.bankaccount);
+
+            $("#accaccountid").val(item.id);
+            $("#accuserid").val(item.userid);
+
+
+
+
+
+
+
+
+
+
+
+
+
+            //set active tab
+            $(".acc-nav-item").find('a').each((i, el) => {
+              if ($(el).hasClass("active"))
+                $(el).removeClass("active")
+
+              if ($(el).attr('id') === "settings-nav-link")
+                $(el).addClass("active")
+            });
+
+            $("#accTabContent").find('div').each((i, el) => {
+              if ($(el).hasClass("active"))
+                $(el).removeClass("active")
+
+              if ($(el).hasClass("show"))
+                $(el).removeClass("show")
+
+              if ($(el).attr('id') === "settings-tab-pane")
+                $(el).addClass("active");
+              $(el).addClass("show")
+            });
+
+          }
+        });
+
+      })
+
+
+    });
+  </script>
+
+</body>
+
+</html>

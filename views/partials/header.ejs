@@ -1,0 +1,154 @@
+<header class="main-header " id="header">
+  <nav class="navbar navbar-static-top navbar-expand-lg">
+    <!-- Sidebar toggle button -->
+    <!-- <button id="sidebar-toggler" class="sidebar-toggle">
+        <span class="sr-only">Toggle navigation</span>
+      </button> -->
+    <!-- search form -->
+    <div class="search-form d-none d-lg-inline-block">
+      <div class="input-group">
+        <button type="button" name="search" id="search-btn" class="btn btn-flat">
+          <i class="mdi mdi-magnify"></i>
+        </button>
+        <input type="text" name="query" id="top-search-input" class="form-control" placeholder="Trading code"
+          aria-label="Trading Code" autofocus autocomplete="off" />
+      </div>
+      <div id="search-results-container">
+        <ul id="top-search-results"></ul>
+      </div>
+    </div>
+
+    <div class="navbar-right ">
+      <ul class="nav navbar-nav">
+        <li class="dropdown notifications-menu">
+          <button class="dropdown-toggle" data-toggle="dropdown">
+            <i class="mdi mdi-bell-outline"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-right">
+            <li class="dropdown-header">You have 5 notifications</li>
+            <li>
+              <a href="#">
+                <i class="mdi mdi-account-plus"></i> New user registered
+                <span class=" font-size-12 d-inline-block float-right"><i class="mdi mdi-clock-outline"></i> 10
+                  AM</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <i class="mdi mdi-account-remove"></i> User deleted
+                <span class=" font-size-12 d-inline-block float-right"><i class="mdi mdi-clock-outline"></i> 07
+                  AM</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <i class="mdi mdi-chart-areaspline"></i> Sales report is ready
+                <span class=" font-size-12 d-inline-block float-right"><i class="mdi mdi-clock-outline"></i> 12
+                  PM</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <i class="mdi mdi-account-supervisor"></i> New client
+                <span class=" font-size-12 d-inline-block float-right"><i class="mdi mdi-clock-outline"></i> 10
+                  AM</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <i class="mdi mdi-server-network-off"></i> Server overloaded
+                <span class=" font-size-12 d-inline-block float-right"><i class="mdi mdi-clock-outline"></i> 05
+                  AM</span>
+              </a>
+            </li>
+            <li class="dropdown-footer">
+              <a class="text-center" href="#"> View All </a>
+            </li>
+          </ul>
+        </li>
+        <li class="right-sidebar-in right-sidebar-2-menu">
+            <a href="/dashboard" id="testdata"><i class="mdi mdi-home-account text-primary"></i></a>
+        </li>
+
+
+        <% if(data.login){ %>
+        <!-- User Account -->
+        <li class="dropdown user-menu">
+          <button href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+            <img src="/public/img/user/user.png" class="user-image" alt="User Image" /> 
+            <!-- <img class="user-image" onerror="if (this.src != '/public/img/user/user.png') this.src = '/public/img/user/user.png';" src="/public/img/user/<%= data.login.profilpicurl %>"/> -->
+            <span class="d-none d-lg-inline-block"> <%= data.login.name %></span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-right">
+            <!-- User image -->
+            <li class="dropdown-header">
+              <div class="d-inline-block">
+                <%= data.login.name %> <small class="pt-1"><%= data.login.email %></small>
+              </div>
+            </li>
+            <li>
+              <a href="/dashboard" id="testdata"> <i class="mdi mdi-home-account"></i> Home </a>
+            </li>
+            <li>
+              <a href="/account">
+                <i class="mdi mdi-account"></i> My Account
+              </a>
+            </li>
+            <li>
+              <a href="/transaction">
+                <i class="mdi mdi-bank-transfer"></i> Transaction
+              </a>
+            </li>
+            <li>
+              <a href="/reports">
+                <i class="mdi mdi-database-search"></i> Reports
+              </a>
+            </li>
+            <!-- <li class="right-sidebar-in">
+              <a href="javascript:0"> <i class="mdi mdi-settings"></i> Setting </a>
+            </li> -->
+
+            <li class="dropdown-footer">
+              <a href="/logout"> <i class="mdi mdi-logout"></i> Log Out </a>
+            </li>
+          </ul>
+        </li>
+        <% } else {%>
+        <!--Login Button-->
+        <li class="dropdown-footer">
+          <a href="/login"> <i class="mdi mdi-login"></i> Sign In </a>
+        </li>
+        <% } %>
+      </ul>
+    </div>
+
+  </nav>
+  <% if(data.marketstatu){ %>
+  <div class="mktupdatetime">
+
+      <div class="float-right">
+          Latest Share Price On
+          <% if(data.marketstatu.marketstatus === "Closed"){ %>
+      
+          <i id="iLastUpdate" class="mdi mdi-clock-alert text-default"> &nbsp; <%= data.marketstatu.dseupdate %> </i>
+          <% } else { %>
+          <i id="iLastUpdate" class="mdi mdi-clock text-success">&nbsp;<%= data.marketstatu.dseupdate %></i>
+          <% } %>
+        </div>
+
+<div>
+  <div>
+          DSE Staus:
+          <% if(data.marketstatu.marketstatus === "Closed"){ %>
+      
+          <i class="mdi mdi-autorenew text-default">  <%= data.marketstatu.marketstatus %> </i>
+          <% } else { %>
+          <i class="mdi mdi-autorenew mdi-spin  text-success"><%= data.marketstatu.marketstatus %></i>
+          <% } %>
+        </div>
+</div>
+
+  </div>
+  <% } %>
+
+</header>

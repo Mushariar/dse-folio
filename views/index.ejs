@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <%- include('partials/head.ejs') %>
+</head>
+
+<body class="header-fixed sidebar-fixed sidebar-dark header-light" id="body">
+
+  <script>
+    NProgress.configure({ showSpinner: false });
+    NProgress.start();
+  </script>
+
+
+  <div id="toaster"></div>
+
+
+  <div class="wrapper">
+
+
+
+
+    <div class="page-wrapper">
+      <%- include('partials/header.ejs') %>
+
+      <div class="content-wrapper">
+        <div class="content">
+          
+        </div>
+
+
+
+       <!-- include('partials/right-sidebar.ejs') -->
+
+      </div>
+
+      <%- include('partials/footer.ejs') %>
+
+
+
+    </div>
+  </div>
+
+  <%- include('partials/scripts.ejs') %>
+
+  
+</body>
+
+</html>

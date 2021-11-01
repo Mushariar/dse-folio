@@ -1,0 +1,150 @@
+<div class="right-sidebar-2">
+  <div class="right-sidebar-container-2">
+    <div class="slim-scroll-right-sidebar-2">
+
+      <div class="right-sidebar-2-header">
+        <h2>Let's Trade</h2>
+        <p>Trade Entry Form</p>
+        <div class="btn-close-right-sidebar-2">
+          <i class="mdi mdi-window-close"></i>
+        </div>
+      </div>
+
+      <div class="right-sidebar-2-body">
+
+        <form id="trxform" role="form" method="POST" action="/createtransaction" enctype="multipart/form-data">
+            
+          <span class="right-sidebar-2-subtitle">Trade Date</span>
+          <div class="no-col-space">
+            <input type="date" class="form-control" id="trxtransdate" name="trxtransdate" placeholder="yyyy-mm-dd" required>
+          </div>
+
+          <span class="right-sidebar-2-subtitle">Select Account</span>
+          <div class="no-col-space">
+            <select class="right-sidebar-2-select" id="trxaccount" name="trxaccount" tabindex="1" required>
+            </select>
+          </div>
+          <span class="">Select Account</span>
+
+          <span class="right-sidebar-2-subtitle">Balance</span>
+          <div class="no-col-space">
+            <input type="number" class="form-control" id="trxbalance" name="trxbalance" step="1" min="1" 
+            placeholder="Quantity" readonly>
+          </div>
+
+          <span class="right-sidebar-2-subtitle">Select Transaction Type</span>
+          <div class="no-col-space">
+            <select class="right-sidebar-2-select" id="trxtranstype" name="trxtranstype" tabindex="2" required>
+              <option value="BUY" selected>BUY</option>
+              <option value="SALE">SALE</option>
+              <option value="RECEIPT">RECEIPT</option>
+              <option value="PAYMENT">PAYMENT</option>
+              <option value="CASH DIVIDENT">CASH DIVIDENT</option>
+              <option value="STOCK DIVIDENT">STOCK DIVIDENT</option>
+              <option value="RIGHT SHARE">RIGHT SHARE</option>
+            </select>
+          </div>
+
+          <span class="right-sidebar-2-subtitle">Trading Code</span>
+          <div class="no-col-space">
+            <input type="text" class="form-control" id="trxtradingcode" name="trxtradingcode" tabindex="3"
+              placeholder="Trading Code" placeholder="" >
+          </div>
+          <span class="right-sidebar-2-subtitle">Quantity</span>
+          <div class="no-col-space">
+            <input type="number" class="form-control" id="trxquantity" name="trxquantity" tabindex="4" step="1"
+              placeholder="Quantity" readonly>
+          </div>
+          <div class="row">
+            <div class="col-xl-5 col-md-5">
+              <span class="right-sidebar-2-subtitle">Rate</span>
+              <div class="no-col-space">
+                <input type="number" class="form-control" id="trxrate" name="trxrate" tabindex="5" min="0" step=".01"
+                  placeholder="Rate" readonly>
+              </div>
+            </div>
+            <div class="col-xl-7 col-md-7">
+              <span class="right-sidebar-2-subtitle">Total Price</span>
+              <div class="no-col-space">
+                <input type="number" class="form-control" id="trxtotalprice" name="trxtotalprice" placeholder=""
+                  readonly>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xl-5 col-md-5">
+              <span class="right-sidebar-2-subtitle">Comm %</span>
+              <div class="no-col-space">
+                <input type="number" class="form-control" id="trxcommissionpct" name="trxcommissionpct" placeholder=""
+                  readonly>
+              </div>
+            </div>
+            <div class="col-xl-7 col-md-7">
+              <span class="right-sidebar-2-subtitle">Comm Amount</span>
+              <div class="no-col-space">
+                <input type="number" class="form-control" id="trxcommission" name="trxcommission"
+                  placeholder="Commission" readonly>
+              </div>
+            </div>
+          </div>
+
+
+          <span class="right-sidebar-2-subtitle">Dividend %</span>
+          <div class="no-col-space">
+            <input type="number" class="form-control" id="trxdividendpct" name="trxdividendpct" tabindex="6"
+              placeholder="Dividend" readonly>
+          </div>
+
+          <span class="right-sidebar-2-subtitle">Total Amount</span>
+          <div class="no-col-space">
+            <input type="number" class="form-control" id="trxamount" name="trxamount" placeholder="Total Amount"
+              tabindex="7" placeholder="" readonly>
+          </div>
+
+          <span class="right-sidebar-2-subtitle">Realized Profit</span>
+          <div class="no-col-space">
+            <input type="number" class="form-control" id="trxrealizedprofit" name="trxrealizedprofit"
+              placeholder="Realized Profit" readonly>
+          </div>
+
+          <div class="row">
+            <div class="col-xl-5 col-md-5">
+              <span class="right-sidebar-2-subtitle">Avg Cost</span>
+              <div class="no-col-space">
+                <input type="number" class="form-control" id="trxavgcost" name="trxavgcost" placeholder="" readonly>
+              </div>
+            </div>
+            <div class="col-xl-7 col-md-7">
+              <span class="right-sidebar-2-subtitle">Total Cost</span>
+              <div class="no-col-space">
+                <input type="number" class="form-control" id="trxtotalcost" name="trxtotalcost" placeholder="" readonly>
+              </div>
+            </div>
+          </div>
+
+          <span class="right-sidebar-2-subtitle">Particular</span>
+          <div class="no-col-space">
+            <input type="text" class="form-control" id="trxcomments" name="trxcomments"
+              placeholder="Particular" maxlength="150" tabindex="8" >
+          </div>
+
+          <input type='hidden' id="trxaccountid" name="trxaccountid" value="" required/>
+          <div class="row">
+              <div class="col-xl-6 col-md-6">
+          <button id="btnClearTrx" type="button" class="mb-1 btn btn-warning btn-right-sidebar-2 btn-reset">
+              <i class=" mdi mdi-alert-outline mr-1"></i> Clear</button>
+            </div>
+            <div class="col-xl-6 col-md-6">
+          <button id="btnSubmitTrx" name="btnSubmitTrx" type="submit" class="mb-1 btn btn-success float-right" tabindex="9">
+              <i class=" mdi mdi-checkbox-marked-outline mr-1"></i> Success</button>
+           
+            </div>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+</div>

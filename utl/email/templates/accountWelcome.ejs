@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!--<![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <link rel="stylesheet" href="http://bheramarasamity.com/admin/public/vendor/bootstrap/css/bootstrap.min.css">
+
+    <script src="http://bheramarasamity.com/admin/public/vendor/jquery/js/jquery-3.3.1.min.js"></script>
+    <script src="http://bheramarasamity.com/admin/public/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <style>
+        td {
+            font-family: Arial;
+            font-size: 14px;
+            padding: 8px 5px 2px 8px !important;
+            border-top: none !important;
+        }
+
+        .underlined-td {
+            font-family: Arial;
+            font-size: 14px;
+            border-top: none !important;
+            border-bottom: 1px dashed #ddd !important;
+
+        }
+
+        p {
+            font-family: Arial;
+            font-size: 13px;
+        }
+
+        @media print {
+
+            /* style sheet for print goes here */
+            .noprint {
+                visibility: hidden;
+            }
+        }
+    </style>
+</head>
+
+<body style="border: solid 1px;">
+    <div style="height: 20px;"></div>
+
+
+    <div class="form-inline" style="width: 90%; margin-left: 5%; padding-bottom: 25px;">
+            <img src="http://bheramarasamity.com/admin/public/images/bsd_logo.png" style="height: 90px; margin: auto; text-align: center"">
+            <h1 style="text-align: center; margin: 2px;">ভেড়ামারা সমিতি ঢাকা</h1>
+            <h3 style="text-align: center">সদস্যপদ নিবন্ধন</h3>
+    </div>
+
+
+    <div style="height: 25px;"></div>
+
+    <div style="display: block;">
+
+        <table id="tabregistration" class="table bgimg" cellspacing="0" style="width: 90%; margin-left: 5%;">
+            <tbody>
+
+                <tr>
+                    <td><h4">বরাদ্দকৃত সদস্য কোড</h4></td>
+                    <td class="underlined-td" colspan="3"><h4 style="text-align: center"><%= data.Member.memberid %></h4></td>
+                    <td><img id="memberimagepreview"
+                        src="http://bheramarasamity.com/admin/public/memberimage/<%= data.Member.memberimageurl %>"
+                        style="width: 120px;" /></td>
+                    
+                </tr>
+
+                <tr>
+                    <td>নাম (বাংলা)</td>
+                    <td class="underlined-td" colspan="4"><%= data.Member.fullname_bn %></td>
+                </tr>
+                <tr>
+                    <td>নাম (ইংরেজি)</td>
+                    <td class="underlined-td" colspan="4"><%= data.Member.firstname %></td>
+                </tr>
+                <tr>
+                    <td>পিতার নাম</td>
+                    <td class="underlined-td" colspan="4"><%= data.Member.fathername %></td>
+                </tr>
+
+                <tr>
+                    <td>মাতার নাম</td>
+                    <td class="underlined-td" colspan="4"><%= data.Member.mothername %></td>
+                </tr>
+
+
+
+                <tr>
+                    <td>জন্ম তারিখ</td>
+                    <td class="underlined-td" colspan="4"><%= data.Member.dob %></td>
+                </tr>
+                <tr>
+                    <td>রক্তের গ্রূপ</td>
+                    <td class="underlined-td" colspan="4"><%= data.Member.bloodgroup %></td>
+                </tr>
+                <tr>
+                    <td>জাতীয় পরিচয়পত্র নং</td>
+                    <td class="underlined-td" colspan="4"><%= data.Member.nid %></td>
+                </tr>
+
+                <tr></tr>
+                <tr></tr>
+
+                <tr>
+                    <td>বর্তমান ঠিকানা</td>
+                    <td class="underlined-td" colspan="4"><%= data.Member.presentaddress %></td>
+                </tr>
+
+                <tr>
+                    <td>থানা/উপজেলা</td>
+                    <td class="underlined-td" colspan="4"><%= data.Member.presentupozillathana %></td>
+                </tr>
+                <tr>
+                    <td>জেলা</td>
+                    <td class="underlined-td" colspan="4"><%= data.Member.presentdistrict %></td>
+                </tr>
+                <tr>
+                    <td>বিভাগ</td>
+                    <td class="underlined-td" colspan="4"><%= data.Member.presentdivision %></td>
+                </tr>
+
+                <tr></tr>
+                <tr></tr>
+
+                <tr>
+                    <td>স্থায়ী ঠিকানা</td>
+                    <td class="underlined-td" colspan="4"><%= data.Member.permanentaddress %></td>
+                </tr>
+
+                <tr>
+                    <td>থানা/উপজেলা</td>
+                    <td class="underlined-td" colspan="4"><%= data.Member.permanentupozillathana %></td>
+                </tr>
+                <tr>
+                    <td>জেলা</td>
+                    <td class="underlined-td" colspan="4"><%= data.Member.permanentdistrict %></td>
+                </tr>
+                <tr>
+                    <td>বিভাগ</td>
+                    <td class="underlined-td" colspan="4"><%= data.Member.permanentdivision %></td>
+                </tr>
+
+                <tr></tr>
+                <tr></tr>
+
+                <tr>
+                    <td>মোবাইল নং</td>
+                    <td class="underlined-td" colspan="4"><%= data.Member.mobile %></td>
+                </tr>
+                <tr>
+                    <td>ইমেইল</td>
+                    <td class="underlined-td" colspan="4"><%= data.Member.email %></td>
+                </tr>
+                <tr>
+                    <td>ফেসবুক ইউআরএল</td>
+                    <td class="underlined-td" colspan="4"><%= data.Member.facebookurl %></td>
+                </tr>
+
+                <tr>
+                    <td>পেশা</td>
+                    <td class="underlined-td" colspan="4"><%= data.Member.occupation %></td>
+                </tr>
+                <tr>
+                    <td>প্রতিষ্ঠান</td>
+                    <td class="underlined-td" colspan="4"><%= data.Member.organization %></td>
+                </tr>
+
+                <tr>
+                    <td>কর্মক্ষেত্রের ঠিকানা</td>
+                    <td class="underlined-td" colspan="4"><%= data.Member.officeaddress %></td>
+                </tr>
+                <tr>
+                    <td>অফিস ফোন</td>
+                    <td class="underlined-td" colspan="4"><%= data.Member.officephone %></td>
+                </tr>
+                <div class="form-inline col-md-3">
+                    <td>বৈবাহিক অবস্থা</td>
+                    <td class="underlined-td" colspan="4"><%= data.Member.maritalsattus %></td>
+                    </tr>
+
+                    <tr>
+                        <td>স্ত্রী/স্বামীর নাম</td>
+                        <td class="underlined-td" colspan="4"><%= data.Member.spousename %></td>
+                    </tr>
+                    <tr>
+                        <td>বিবাহের তারিখ</td>
+                        <td class="underlined-td" colspan="4"><%= data.Member.dateofmarriage %></td>
+                    </tr>
+
+                    <tr>
+                        <td>সদস্যপদের ধরণ</td>
+                        <td class="underlined-td" colspan="4"><%= data.Member.typeofmembership %></td>
+                    </tr>
+
+                    <tr>
+                        <td>টাকার পরিমান</td>
+                        <td class="underlined-td" colspan="4"><%= data.Member.paymentamount %></td>
+                    </tr>
+                    <tr>
+                        <td>টাকা জমাদানের মাধ্যম</td>
+                        <td class="underlined-td" colspan="4"><%= data.Member.typeofpayment %></td>
+                    </tr>
+
+                    <tr>
+                        <td>টাকা জমাদানের রশিদ নং</td>
+                        <td class="underlined-td" colspan="4"><%= data.Member.paymentid %></td>
+                    </tr>
+                    <tr>
+                        <td>জমাদানের তারিখ</td>
+                        <td class="underlined-td" colspan="4"><%= data.Member.paymentdate %></td>
+                    </tr>
+
+            </tbody>
+        </table>
+
+        <br /><br />
+
+        <div style="margin-left: 5%;">
+            <br />
+            <p><b>বিঃ দ্রঃ</b></p>
+
+            <p>
+                স্বয়ংক্রিয় ভাবে আপনার জন্য একটি একাউন্ট খোলা হয়েছে । একাউন্টি সচল করতে <a
+                    href="<%= data.Activate.redirecturl %>/<%= data.Activate.passwordtoken %>"> ক্লিক করুন </a> ।
+                <br />
+                আগামী ৩ দিনের মধ্যে সচল না করলে লিংকটি অকার্যকর হয়ে যাবে।
+                <br />
+                <br />
+
+            </p>
+        </div>
+    </div>
+
+</body>
+
+</html>

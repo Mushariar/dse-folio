@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <%- include('partials/head.ejs') %>
+</head>
+
+<body class="header-fixed sidebar-fixed sidebar-dark header-light" id="body">
+
+  <script>
+    NProgress.configure({ showSpinner: false });
+    NProgress.start();
+  </script>
+
+
+  <div id="toaster"></div>
+
+
+  <div class="wrapper">
+
+    <div class="page-wrapper">
+      <%- include('partials/header.ejs') %>
+
+      <div class="content-wrapper">
+        <div class="content">
+
+
+
+          <div class="row">
+            <div class="col-xl-12 col-md-12">
+              <div class="card card-default" data-scroll-height="675">
+                <div class="card-header">
+
+                  <div class="col-sm-4 col-md-3 col-lg-2">
+                    <div class="form-group">
+                      <input type="text" class="text-input" id="rptstart" name="rptstart" placeholder="Star Date">
+                    </div>
+                  </div>
+
+
+                  <div class="col-sm-4 col-md-3 col-lg-2">
+                    <div class="form-group">
+                      <input type="text" class="text-input" id="rptend" name="rptend" placeholder="End Date">
+                    </div>
+                  </div>
+
+                  <div class="col-sm-4 col-md-3 col-lg-2">
+                    <div class="form-group">
+                      <select class="text-input" id="rptaccount" name="rptaccount" required>
+                          <option value="" selected> All Account</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-4 col-md-3 col-lg-2">
+                    <div class="form-group">
+                      <select class="text-input" id="rpttranytype" name="rpttranytype">
+                        <option value="" selected> All Type</option>
+                        <option value="BUY">BUY</option>
+                        <option value="SALE">SALE</option>
+                        <option value="RECEIPT">RECEIPT</option>
+                        <option value="PAYMENT">PAYMENT</option>
+                        <option value="CASH DIVIDENT">CASH DIVIDENT</option>
+                        <option value="STOCK DIVIDENT">STOCK DIVIDENT</option>
+                        <option value="RIGHT SHARE">RIGHT SHARE</option>
+                      </select>
+
+                    </div>
+                  </div>
+
+                  <div class="col-sm-4 col-md-3 col-lg-2">
+                    <div class="form-group">
+                      <input type="text" class="text-input" id="rptcompanycode" name="rptcompanycode"
+                        placeholder="Trading Code">
+                    </div>
+                  </div>
+
+
+                  <div class="col-sm-4 col-md-3 col-lg-2">
+                    <div class="form-group float-right">
+                      <input type="button" class="btn btn-sm btn-info" id="btnLoadData" value="Load Data">
+                    </div>
+                  </div>
+
+
+
+
+
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
+          <div class="row">
+            <div class="col-xl-12 col-md-12">
+              <!-- Sales Graph -->
+              <div class="card card-default" data-scroll-height="675">
+                <div class="card-header">
+
+                  <div class="col-xl-6 col-md-6">
+                    <h2>TRANSACTION STATEMENT</h2>
+                  </div>
+
+                  <div class="col-xl-6 col-md-6" style="text-align: right">
+                    <p id="sharePriceUpdatedAt"> </p>
+                  </div>
+                </div>
+
+                <div class="card-body">
+
+                  <div style="width: 100%; overflow-x: auto;" class="pb-4">
+                    <table id="TabTransHist1" class="display" width="100%"></table>
+                  </div>
+
+
+                </div>
+                <!-- <div class="card-footer d-flex flex-wrap bg-white p-0">
+                    <div class="col-6 px-0">
+                      <div class="text-center p-4">
+                        <h4>$6,308</h4>
+                        <p class="mt-2">Total orders of this year</p>
+                      </div>
+                    </div>
+                    <div class="col-6 px-0">
+                      <div class="text-center p-4 border-left">
+                        <h4>$70,506</h4>
+                        <p class="mt-2">Total revenue of this year</p>
+                      </div>
+                    </div>
+                  </div> -->
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
+        <%- include('partials/footer.ejs') %>
+
+
+
+      </div>
+    </div>
+
+    <%- include('partials/scripts.ejs') %>
+
+    <script type="text/javascript">
+      var startDate,
+        endDate;
+
+      updateStartDate = function () {
+        startPicker.setStartRange(startDate);
+        endPicker.setStartRange(startDate);
+        endPicker.setMaxDate(moment().toDate());
+        endPicker.setMinDate(startDate);
+      },
+        updateEndDate = function () {
+          startPicker.setEndRange(endDate);
+          endPicker.setEndRange(endDate);
+          startPicker.setStartRange(moment(endDate).add(-2, 'years').toDate());
+          startPicker.setMinDate(moment(endDate).add(-2, 'years').toDate());
+          startPicker.setMaxDate(endDate);
+        },
+        startPicker = new Pikaday({
+          field: document.getElementById('rptstart'),
+          minDate: new Date(2000, 01, 01),
+          maxDate: new Date(),
+          format: 'YYYY-MM-DD',
+          onSelect: function () {
+            startDate = this.getDate();
+            updateStartDate();
+          }
+        }),
+        endPicker = new Pikaday({
+          field: document.getElementById('rptend'),
+          minDate: new Date(2000, 01, 01),
+          maxDate: new Date(),
+          format: 'YYYY-MM-DD',
+          onSelect: function () {
+            endDate = this.getDate();
+            updateEndDate();
+          }
+        }),
+        _startDate = startPicker.getDate();
+      _endDate = endPicker.getDate();
+
+      if (_startDate) {
+        startDate = _startDate;
+        updateStartDate();
+      }
+
+      if (_endDate) {
+        endDate = _endDate;
+        updateEndDate();
+      }
+    </script>
+
+    <script>
+      $(document).ready(function () {
+
+        getData("/transactionui", {}, "GET", loaddata);
+
+        function loaddata(ds) {
+          loadtrxaccount(ds.useraccount);
+          loadtrxtradingcode(ds.companylist);
+        }
+
+        function loadtrxtradingcode(ds) {
+          $("#rptcompanycode").autocomplete({
+            minLength: 1,
+            maxResults: 10,
+            autoFocus: false,
+            focus: function (event, ui) {
+              $("#rptcompanycode").val(ui.item.value);
+              return false;
+            },
+            source: function (request, response) {
+              response($.map(ds, function (item) {
+                if (item.companycode.toLowerCase().indexOf(request.term.toLowerCase()) > -1
+                  ||
+                  (item.comapnyname ? item.comapnyname.toLowerCase().indexOf(request.term.toLowerCase()) > -1 : false)
+                )
+                  return {
+                    label: item.comapnyname,
+                    value: item.companycode
+                  };
+              }).slice(0, this.options.maxResults)
+              );
+            },
+            change: function (event, ui) {
+              if (ui.item == null) {
+                event.currentTarget.value = '';
+                event.currentTarget.focus();
+              }
+            }
+          }).autocomplete("instance")._renderItem = function (ul, item) {
+            return $('<li class="autocomplete-top-search">')
+
+              .append('<div style="color: #4c84ff;">' + item.value + '</div><div style="color: #000;">' + item.label + '</div>')
+              .appendTo(ul);
+          }
+        }
+
+        /*======== User Account Information for Transaction ========*/
+        function loadtrxaccount(ds) {
+
+          if (ds) {
+            ds.forEach(function (acc, i) {
+              $('#rptaccount')
+                .append($("<option></option>")
+                  .attr("value", acc.id)
+                  .text(acc.boid)
+                );
+
+              // if (acc.isdefault === 1) {
+              //   $('#rptaccount option')[i].selected = true;
+              // }
+
+            });
+          }
+          else {
+            alert("No account found");
+          }
+
+        }
+
+
+        //rptstart  rptend  rptaccount  rpttranytype  rptcompanycode
+        $("#btnLoadData").click((e) => {
+          let pData = {
+            rptstart: $("#rptstart").val(),
+            rptend: $("#rptend").val(),
+            rptaccount: $("#rptaccount").val(),
+            rpttranytype: $("#rpttranytype").val(),
+            rptcompanycode: $("#rptcompanycode").val()
+          };
+
+          getData("/transactionhistory", pData, "POST", generatetables);
+        })
+
+
+
+        function generatetables(ds) {
+
+
+          //     userid: p.userId,
+          // accountid: p.accountId,
+          // companycode: p.companyCode,
+          // transtype: p.transType,
+          // startdate: p.startDate,
+          // enddate: p.endDate
+
+          console.log(ds.transhist);
+
+          bindTable1(ds.transhist);
+
+
+
+
+
+        }
+
+        function bindTable1(ds) {
+          $('#TabTransHist1').html("");
+
+          let vFooter = "<tfoot><tr>";
+          for (let i = 0; i < 12; i++) {
+            vFooter += "<th class='text-right pr-1'></th>";
+          }
+          vFooter += "</tr></tfoot>";
+
+          $('#TabTransHist1').prepend(vFooter);
+
+          // transdate: "2020-09-02"
+          // transtype: "BUY"
+          // boid: "Y3176"
+          // sector: "Textile"
+          // comapnyname: "Argon Denims Limited" ---
+          // companycode: "ARGONDENIM"
+          // quantity: 125
+          // rate: 22.3
+          // totalprice: 2787.5
+          // commission: 11.15
+          // amount: 2798.65
+          // edingbalance: 47156.97
+          // comments: "" 
+
+
+
+          $('#TabTransHist1').DataTable({
+
+            lengthMenu: [10, 20, 30, 50, 75, 100],
+            dataType: 'json',
+            destroy: true,
+            responsive: true,
+            autoWidth: true,
+            pageLength: 10,
+            //paging: false,
+            aaSorting: [],
+            colReorder: true,
+            dom: 'lBfrtip',
+            //buttons: ['copy', 'csv', 'excel'],// 'pdf'],// 'print'],
+            buttons: [
+              {
+                extend: 'excel',
+                text: 'Excel',
+                //title: $("#servicetype option:selected").text() + "_" + $("#walletlist option:selected").text() + "_" + moment().format("YYYYMMDD")
+                //exportOptions: {columns: [0, 1, 2, 3, 4, 5]}
+              },
+              {
+                extend: 'pdfHtml5',
+                text: 'PDF'
+              }
+            ],
+            data: ds,
+            "columns": [
+              { "data": "transdate", "title": "Date", "width": "80px" },
+              { "data": "transtype", "title": "Type" },
+              { "data": "boid", "title": "BOId" },
+              { "data": "sector", "title": "Sector" },
+              {
+                "data": "companycode", "name": "companycode", "title": "Trading Code",
+                fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                  if(oData.companycode)
+                  $(nTd).html("<a href='/companyinfo/" + oData.companycode + "'>" + oData.companycode + "</a>");
+                  else
+                  $(nTd).html("-");
+                }
+              },
+              { "data": "quantity", "title": "Qty", "className": "text-right" },
+              { "data": "rate", "title": "Rate", "className": "text-right" },
+              { "data": "totalprice", "title": "Total Price", "className": "text-right" },
+              { "data": "commission", "title": "Commission", "className": "text-right" },
+              { "data": "amount", "title": "Net Amount", "className": "text-right" },
+              { "data": "edingbalance", "title": "Balance", "className": "text-right" },
+              { "data": "comments", "title": "Particar" }
+            ],
+            responsive: true,
+            autoWidth: true,
+            pageLength: 35,
+            paging: true,
+            aaSorting: [],
+            colReorder: true,
+            "footerCallback": function (row, data, start, end, display) {
+              let summCols = [5, 7, 8, 9];
+              var api = this.api();
+
+              // Remove the formatting to get integer data for summation
+              var intVal = function (i) {
+                return typeof i === 'string' ?
+                  i.replace(/[\$,]/g, '') * 1 :
+                  typeof i === 'number' ?
+                    i : 0;
+              };
+
+              $.each(summCols, function (idx, value) {
+
+                // Total over all pages
+                var total = api
+                  .column(value)
+                  .data()
+                  .reduce(function (a, b) {
+
+                    return intVal(a) + intVal(b);
+                  }, 0);
+
+                // Total over this page
+                var pageTotal = api
+                  .column(value, { page: 'current' })
+                  .data()
+                  .reduce(function (a, b) {
+                    return intVal(a) + intVal(b);
+                  }, 0);
+
+                // Update footer
+                if (pageTotal.round(2) < total.round(2)) {
+                  $(api.column(value).footer()).html(
+                    formatNumber(pageTotal.round(2)) + '</br> (' + formatNumber(total.round(2)) + ')'
+                  );
+                }
+                else {
+                  $(api.column(value).footer()).html(
+                    formatNumber(total.round(2))
+                  );
+                }
+
+
+                //console.log('$' + pageTotal + ' ( $' + total + ' total)');
+              });
+
+            }
+          });
+        }
+
+
+
+      });
+
+
+    </script>
+</body>
+
+</html>

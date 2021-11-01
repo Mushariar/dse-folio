@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <%- include('partials/head.ejs') %>
+</head>
+
+<body class="header-fixed sidebar-fixed sidebar-dark header-light" id="body">
+
+  <script>
+    NProgress.configure({ showSpinner: false });
+    NProgress.start();
+  </script>
+
+
+  <div id="toaster"></div>
+
+
+  <div class="wrapper">
+
+
+
+
+    <div class="page-wrapper">
+      <%- include('partials/header.ejs') %>
+
+      <div class="content-wrapper">
+        <div class="content">
+          <!-- Top Statistics -->
+
+          <div class="row">
+            <div class="col-xl-3 col-sm-6">
+              <div class="card card-mini mb-4">
+                <div class="card-body">
+                  <h2 class="mb-1" id="dvAccountCount"></h2>
+                  <p>Account</p>
+                  <h2 class="mt-4" id="dvCompanyCount"></h2>
+                  <p>Company</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-sm-6">
+              <div class="card card-mini  mb-4">
+                <div class="card-body">
+                  <h2 class="mb-1" id="dvTotalStock"></h2>
+                  <p>Stocks</p>
+
+                  <h2 class="mt-4" id="dvTotalCost"></h2>
+                  <p>Cost</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-sm-6">
+              <div class="card card-mini mb-4">
+                <div class="card-body">
+                  <h2 class="mb-1" id="dvSoldStock"></h2>
+                  <p>Sold Stock</p>
+                  <h2 class="mt-4" id="dvSoldAmount"></h2>
+                  <p>Sold Amount</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-sm-6">
+              <div class="card card-mini mb-4">
+                <div class="card-body">
+                  <h2 class="mb-1" id="dvUnrealizeP"></h2>
+                  <p>Unrealized Profit</p>
+                  <h2 class="mt-4" id="dvRealizeP"></h2>
+                  <p>Realized Profit</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xl-12 col-md-12">
+              <!-- Sales Graph -->
+              <div class="card card-default" data-scroll-height="675">
+                <div class="card-header">
+
+                  <div class="col-xl-6 col-md-6">
+                    <h2>PORTFOLIO STATEMENT</h2>
+                  </div>
+
+                  <div class="col-xl-6 col-md-6" style="text-align: right">
+                    <p id="sharePriceUpdatedAt"> </p>
+                  </div>
+                </div>
+
+                <div class="card-body">
+                  <div class="div_visible_columns float-right">
+                    <button title="Click to hide/show columns" style="margin-top:-2px;font-size:14px;"
+                      class="btn btn-sm btn-secondary dropdown-toggle" type="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false">
+                      Columns
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right" id="colsDrop">
+                      <li>
+                        <div class="checkbox"><label for="column_2"><input id="column_2" checked type="checkbox"
+                              class="toggle-vis mr-1 ml-1" data-column="2">Qty</label></div>
+                      </li>
+                      <li>
+                        <div class="checkbox"><label for="column_3"><input id="column_3" checked type="checkbox"
+                              class="toggle-vis mr-1 ml-1" data-column="3">Avg Cost</label></div>
+                      </li>
+                      <li>
+                        <div class="checkbox"><label for="column_4"><input id="column_4" checked type="checkbox"
+                              class="toggle-vis mr-1 ml-1" data-column="4">Total Cost</label></div>
+                      </li>
+                      <li>
+                        <div class="checkbox"><label for="column_5"><input id="column_5" checked type="checkbox"
+                              class="toggle-vis mr-1 ml-1" data-column="5">Market Price</label></div>
+                      </li>
+                      <li>
+                        <div class="checkbox"><label for="column_6"><input id="column_6" checked type="checkbox"
+                              class="toggle-vis mr-1 ml-1" data-column="6">Market Value</label></div>
+                      </li>
+                      <li>
+                        <div class="checkbox"><label for="column_7"><input id="column_7" checked type="checkbox"
+                              class="toggle-vis mr-1 ml-1" data-column="7">Sold Qty</label></div>
+                      </li>
+                      <li>
+                        <div class="checkbox"><label for="column_8"><input id="column_8" checked type="checkbox"
+                              class="toggle-vis mr-1 ml-1" data-column="8">Sold Amount</label></div>
+                      </li>
+                      <li>
+                        <div class="checkbox"><label for="column_9"><input id="column_9" checked type="checkbox"
+                              class="toggle-vis mr-1 ml-1" data-column="9">Unrealize Profit</label></div>
+                      </li>
+                      <li>
+                        <div class="checkbox"><label for="column_10"><input id="column_10" checked type="checkbox"
+                              class="toggle-vis mr-1 ml-1" data-column="10">Commission</label></div>
+                      </li>
+                      <li>
+                        <div class="checkbox"><label for="column_11"><input id="column_11" checked type="checkbox"
+                              class="toggle-vis mr-1 ml-1" data-column="11">Realize Profit</label></div>
+                      </li>
+                      <li>
+                        <div class="checkbox"><label for="column_12"><input id="column_12" checked type="checkbox"
+                              class="toggle-vis mr-1 ml-1" data-column="12">Category</label></div>
+                      </li>
+                      <li>
+                        <div class="checkbox"><label for="column_13"><input id="column_13" checked type="checkbox"
+                              class="toggle-vis mr-1 ml-1" data-column="13">Sector</label></div>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <ul class="nav nav-tabs" id="portfolioTab" role="tablist">
+                    <li class="nav-item">
+                      <a class="nav-link active" id="icon-home-tab" data-toggle="tab" href="#dvDataTable1" role="tab"
+                        aria-controls="icon-home" aria-selected="true">
+                        <i class="mdi mdi-star mr-1"></i> Protfolio</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="icon-profile-tab" data-toggle="tab" href="#dvDataTable2" role="tab"
+                        aria-controls="icon-profile" aria-selected="false">
+                        <i class="mdi mdi-account mr-1"></i> Account</a>
+                    </li>
+
+                    <li class="nav-item">
+                      <a class="nav-link" id="icon-watchlist-tab" data-toggle="tab" href="#dvDataTable3" role="tab"
+                        aria-controls="icon-profile" aria-selected="false">
+                        <i class="mdi mdi-arrange-send-backward mr-1"></i> Watchlist</a>
+                    </li>
+
+                  </ul>
+
+
+
+                  <div class="tab-content" id="portfolioTabContent2">
+                    <div class="tab-pane pt-3 fade show active" id="dvDataTable1" role="tabpanel"
+                      aria-labelledby="icon-home-tab"">
+                      <div style=" width: 100%; overflow-x: auto;" class="pb-4">
+                      <table id="dataTable1" class="display" width="100%"></table>
+                    </div>
+                  </div>
+                  <div class="tab-pane pt-3 fade" id="dvDataTable2" role="tabpanel" aria-labelledby="icon-profile-tab">
+                    <div style="width: 100%; overflow-x: auto;" class="pb-4">
+                      <table id="dataTable2" class="display" width="100%"></table>
+                    </div>
+                  </div>
+              
+                  <div class="tab-pane pt-3 fade" id="dvDataTable3" role="tabpanel" aria-labelledby="icon-profile-tab">
+                    <div style="width: 100%; overflow-x: auto;" class="pb-4">
+                      <table id="dataTable3" class="display" width="100%"></table>
+                    </div>
+                  </div>
+
+                </div>
+
+
+              </div>
+              <!-- <div class="card-footer d-flex flex-wrap bg-white p-0">
+                <div class="col-6 px-0">
+                  <div class="text-center p-4">
+                    <h4>$6,308</h4>
+                    <p class="mt-2">Total orders of this year</p>
+                  </div>
+                </div>
+                <div class="col-6 px-0">
+                  <div class="text-center p-4 border-left">
+                    <h4>$70,506</h4>
+                    <p class="mt-2">Total revenue of this year</p>
+                  </div>
+                </div>
+              </div> -->
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col-xl-6">
+            <!-- To Do list -->
+            <div class="card card-default" id="todo" data-scroll-height="550">
+              <div class="card-body slim-scroll">
+                <figure class="highcharts-figure">
+                  <div id="investmentPie"></div>
+                </figure>
+              </div>
+              <div class="mt-3">...</div>
+            </div>
+          </div>
+
+          <div class="col-xl-6">
+            <!-- To Do list -->
+            <div class="card card-default" id="todo" data-scroll-height="550">
+              <div class="card-body slim-scroll">
+                <figure class="highcharts-figure">
+                  <div id="unrealizedPie"></div>
+                </figure>
+              </div>
+              <div class="mt-3">...</div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+      </div>
+
+
+
+      <!-- include('partials/right-sidebar.ejs') -->
+
+    </div>
+
+    <%- include('partials/footer.ejs') %>
+
+
+
+  </div>
+  </div>
+
+  <%- include('partials/scripts.ejs') %>
+  <script type="text/javascript" src="/public/plugins/highcharts/highcharts.js"></script>
+  <script type="text/javascript" src="/public/plugins/highcharts/highcharts-3d.js"></script>
+  <script type="text/javascript" src="/public/plugins/highcharts/drilldown.js"></script>
+
+  <script>
+    var tables = {};
+    $(document).ready(function () {
+
+      getData("/transactionsummary", {}, "GET", generatetables);
+
+      function generatetables(ds) {
+        //console.log(ds.watchlist);
+
+        bindTable2(ds.tradesummaryq);
+        bindTable1(ds.tradesummary);
+        bindTable3(ds.watchlist);
+
+        showCharts(ds.tradesummary);
+
+        $("#dvAccountCount").text(ds.grandsummary.account);
+        $("#dvCompanyCount").text(formatNumber(ds.grandsummary.company));
+        $("#dvTotalStock").text(formatNumber(ds.grandsummary.totalstock));
+        $("#dvTotalCost").text(formatNumber(ds.grandsummary.totalcost));
+        $("#dvSoldStock").text(formatNumber(ds.grandsummary.soldstock));
+        $("#dvSoldAmount").text(formatNumber(ds.grandsummary.soldamount));
+
+        if (parseFloat(ds.grandsummary.unrealizedprofit) > 0) {
+          $("#dvUnrealizeP").addClass("text-success");
+          $("#dvUnrealizeP").removeClass("text-danger");
+        }
+        else if (parseFloat(ds.grandsummary.unrealizedprofit) < 0) {
+          $("#dvUnrealizeP").removelass("text-success");
+          $("#dvUnrealizeP").addClass("text-danger");
+        }
+
+        if (parseFloat(ds.grandsummary.realizedprofit) > 0) {
+          $("#dvRealizeP").addClass("text-success");
+          $("#dvRealizeP").removeClass("text-danger");
+        }
+        else if (parseFloat(ds.grandsummary.realizedprofit) < 0) {
+          $("#dvRealizeP").removeClass("text-success");
+          $("#dvRealizeP").addClass("text-danger");
+        }
+
+        $("#dvUnrealizeP").text(formatNumber(ds.grandsummary.unrealizedprofit));
+        $("#dvRealizeP").text(formatNumber(ds.grandsummary.realizedprofit));
+
+
+      }
+
+      // var columns = {
+      //       'Qty': 2,
+      //       'Avg Cost': 3,
+      //       'Total Cost': 4,
+      //       'Market Price': 5,
+      //       'Market Value': 6,
+      //       'Sold Qty': 7,
+      //       'Sold Amount': 8,
+      //       'Unrealize Profit': 9,
+      //       'Commission': 10,
+      //       'Realize Profit': 11,
+      //       'Category': 12,
+      //       'Sector': 13
+      //   };
+
+
+      function bindTable1(ds) {
+        $('#dataTable1').html("");
+
+        let vFooter = "<tfoot><tr>";
+        for (let i = 0; i < 14; i++) {
+          vFooter += "<th></th>";
+        }
+        vFooter += "</tr></tfoot>";
+
+        $('#dataTable1').prepend(vFooter);
+
+        tables["1"] = $('#dataTable1').DataTable({
+          "processing": false,
+          "bJQueryUI": true,
+          //"ajax": "/transactionsummary",
+          "data": ds,
+          "responsive": false,
+          "autoWidth": true,
+          "columns": [
+            { "data": "companycode", "title": "", "className": "no-display" },
+            {
+              "data": "companycode", "name": "companycode", "title": "Trading Code",
+              fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                $(nTd).html("<a href='/companyinfo/" + oData.companycode + "'>" + oData.companycode + "</a>");
+              }
+            },
+            { "data": "totalstock", "title": "Qty", "className": "text-right" },
+            { "data": "avgcost", "title": "Avg Cost", "className": "text-right" },
+            { "data": "totalcost", "title": "Total Cost", "className": "text-right" },
+            { "data": "marketprice", "title": "Market Price", "className": "text-right" },
+            { "data": "marketvalue", "title": "Market Value", "className": "text-right" },
+            { "data": "soldstock", "title": "Sold Qty", "className": "text-right" },
+            { "data": "soldamount", "title": "Sold Amount", "className": "text-right" },
+            { "data": "unrealizedprofit", "title": "Unrealize Profit", "className": "text-right" },
+            { "data": "totalcommission", "title": "Commission", "className": "text-right" },
+            { "data": "realizedprofit", "title": "Realize Profit", "className": "text-right" },
+            { "data": "category", "title": "Category", "className": "text-center" , "className": "text-center"  },
+            { "data": "sector", "title": "Sector" }
+          ],
+          columnDefs: [{
+            // puts a button in the last column
+            targets: [5], render: function (a, b, data, d) {
+              if (data.totalstock < 1) {
+                return "-";
+              }
+              else {
+                if (data.marketprice > data.avgcost) {
+                  return data.marketprice + "<i class='mdi mdi-arrow-up-bold text-success pl-1 font-size-15'></i>";
+                }
+                else if (data.marketprice < data.avgcost) {
+                  return data.marketprice + "<i class='mdi mdi-arrow-down-bold text-danger pl-1 font-size-15'></i>";
+                }
+              }
+              return data.marketprice;
+            }
+          }],
+          "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+            if (aData.totalstock < 1) {
+              $(nRow).css({ "background-color": "#F1F1F1" });
+            }
+
+            if (aData.marketprice > aData.avgcost) {
+              $(nRow).find('td:eq(5)').css('color', 'green');
+              $(nRow).find('td:eq(6)').css('color', 'green');
+            } else if (aData.marketprice < aData.avgcost) {
+              $(nRow).find('td:eq(5)').css('color', 'red');
+              $(nRow).find('td:eq(6)').css('color', 'red');
+            }
+
+            if (aData.unrealizedprofit > 0) {
+              $(nRow).find('td:eq(9)').css('color', 'green');
+            } else if (aData.unrealizedprofit < 0) {
+              $(nRow).find('td:eq(9)').css('color', 'red');
+            }
+
+            if (aData.realizedprofit > 0) {
+              $(nRow).find('td:eq(11)').css('color', 'green');
+            } else if (aData.realizedprofit < 0) {
+              $(nRow).find('td:eq(11)').css('color', 'red');
+            }
+          },
+          initComplete: function () {
+            this.api().columns().every(function (i) {
+              $('#dataTable1 tfoot tr').appendTo('#dataTable1 thead');
+              var column = this;
+
+              if (i === 1 || i === 12 || i === 13) {
+                var select = $('<select><option value=""></option></select>')
+                  .appendTo($(column.footer()).empty())
+                  .on('change', function () {
+                    var val = $.fn.dataTable.util.escapeRegex(
+                      $(this).val()
+                    );
+
+                    column
+                      .search(val ? '^' + val + '$' : '', true, false)
+                      .draw();
+                  });
+
+                column.data().unique().sort().each(function (d, j) {
+                  select.append('<option value="' + d + '">' + d + '</option>')
+                });
+              }
+            });
+
+
+          }
+        });
+      }
+
+      function bindTable2(ds) {
+        $('#dataTable2').html("");
+
+        let vFooter = "<tfoot><tr>";
+        for (let i = 0; i < 14; i++) {
+          vFooter += "<th></th>";
+        }
+        vFooter += "</tr></tfoot>";
+
+        $('#dataTable2').prepend(vFooter);
+
+        tables["2"] = $('#dataTable2').DataTable({
+          "language": {
+            "thousands": ","
+          },
+          "processing": true,
+          "data": ds,
+          "responsive": false,
+          "autoWidth": true,
+          "columns": [
+            { "data": "boid", "title": "BOId" },
+            {
+              "data": "companycode", "name": "companycode", "title": "Trading Code",
+              fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                $(nTd).html("<a href='/companyinfo/" + oData.companycode + "'>" + oData.companycode + "</a>");
+              }
+            },
+            { "data": "totalstock", "title": "Qty", "className": "text-right" },
+            { "data": "avgcost", "title": "Avg Cost", "className": "text-right" },
+            { "data": "totalcost", "title": "Total Cost", "className": "text-right" },
+            { "data": "marketprice", "title": "Market Price", "className": "text-right" },
+            { "data": "marketvalue", "title": "Market Value", "className": "text-right" },
+            { "data": "soldstock", "title": "Sold Qty", "className": "text-right" },
+            { "data": "soldamount", "title": "Sold Amount", "className": "text-right" },
+            { "data": "unrealizedprofit", "title": "Unrealize Profit", "className": "text-right" },
+            { "data": "totalcommission", "title": "Commission", "className": "text-right" },
+            { "data": "realizedprofit", "title": "Realize Profit", "className": "text-right" },
+            { "data": "category", "title": "Category", "className": "text-center"  },
+            { "data": "sector", "title": "Sector" }
+          ],
+          columnDefs: [{
+            // puts a button in the last column
+            targets: [5], render: function (a, b, data, d) {
+              if (data.totalstock < 1) {
+                return "-";
+              }
+              else {
+                if (data.marketprice > data.avgcost) {
+                  return data.marketprice + "<i class='mdi mdi-arrow-up-bold text-success pl-1 font-size-15'></i>";
+                }
+                else if (data.marketprice < data.avgcost) {
+                  return data.marketprice + "<i class='mdi mdi-arrow-down-bold text-danger pl-1 font-size-15'></i>";
+                }
+              }
+              return data.marketprice;
+            }
+          }],
+          "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+            if (aData.totalstock < 1) {
+              $(nRow).css({ "background-color": "#F1F1F1" });
+            }
+
+            if (aData.marketprice > aData.avgcost) {
+              $(nRow).find('td:eq(5)').css('color', 'green');
+              $(nRow).find('td:eq(6)').css('color', 'green');
+            } else if (aData.marketprice < aData.avgcost) {
+              $(nRow).find('td:eq(5)').css('color', 'red');
+              $(nRow).find('td:eq(6)').css('color', 'red');
+            }
+
+            if (aData.unrealizedprofit > 0) {
+              $(nRow).find('td:eq(9)').css('color', 'green');
+            } else if (aData.unrealizedprofit < 0) {
+              $(nRow).find('td:eq(9)').css('color', 'red');
+            }
+
+            if (aData.realizedprofit > 0) {
+              $(nRow).find('td:eq(11)').css('color', 'green');
+            } else if (aData.realizedprofit < 0) {
+              $(nRow).find('td:eq(11)').css('color', 'red');
+            }
+          },
+          initComplete: function () {
+            this.api().columns().every(function (i) {
+
+              $('#dataTable2 tfoot tr').appendTo('#dataTable2 thead');
+              var column = this;
+
+              if (i === 0 || i === 1 || i === 12 || i === 13) {
+                var select = $('<select><option value=""></option></select>')
+                  .appendTo($(column.footer()).empty())
+                  .on('change', function () {
+                    var val = $.fn.dataTable.util.escapeRegex(
+                      $(this).val()
+                    );
+
+                    column
+                      .search(val ? '^' + val + '$' : '', true, false)
+                      .draw();
+                  });
+
+                column.data().unique().sort().each(function (d, j) {
+                  select.append('<option value="' + d + '">' + d + '</option>')
+                });
+              }
+            });
+          }
+        });
+      }
+
+      function bindTable3(ds) {
+        $('#dataTable3').html("");
+
+        let vFooter = "<tfoot><tr>";
+        for (let i = 0; i < 14; i++) {
+          vFooter += "<th></th>";
+        }
+        vFooter += "</tr></tfoot>";
+
+        $('#dataTable3').prepend(vFooter);
+
+        tables["3"] = $('#dataTable3').DataTable({
+          "processing": false,
+          "bJQueryUI": true,
+          //"ajax": "/transactionsummary",
+          "data": ds,
+          "responsive": false,
+          "autoWidth": true,
+          "columns": [
+            {
+              "data": "companycode", "name": "companycode", "title": "Trading Code",
+              fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                $(nTd).html("<a href='/companyinfo/" + oData.companycode + "'>" + oData.companycode + "</a>");
+              }
+            },
+            { "data": "comapnyname", "title": "Company Name", "className": "no-display" },
+            { "data": "ltp", "title": "LTP", "className": "text-right" },
+            { "data": "high", "title": "High", "className": "text-right" },
+            { "data": "low", "title": "Low", "className": "text-right" },
+            { "data": "clsp", "title": "Close", "className": "text-right" },
+            { "data": "ycp", "title": "YCP", "className": "text-right" },
+            { "data": "changeamt", "title": "Change", "className": "text-right" },
+            { "data": "changepct", "title": "Change%", "className": "text-right" },
+            { "data": "trade", "title": "Trade", "className": "text-right" },
+            { "data": "valuemn", "title": "Value(mn)", "className": "text-right" },
+            { "data": "volume", "title": "Volume", "className": "text-right" },
+            { "data": "category", "title": "Category", "className": "text-center" , "className": "text-center" },
+            { "data": "sector", "title": "Sector" }
+          ],
+          "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+            
+            if (aData.changeamt > 0) {
+              $(nRow).find('td:eq(7)').css('color', 'green');
+              $(nRow).find('td:eq(8)').css('color', 'green');
+            } else if (aData.changeamt < 0) {
+              $(nRow).find('td:eq(7)').css('color', 'red');
+              $(nRow).find('td:eq(8)').css('color', 'red');
+            }
+          },
+          initComplete: function () {
+            this.api().columns().every(function (i) {
+              $('#dataTable3 tfoot tr').appendTo('#dataTable3 thead');
+              var column = this;
+
+              if (i === 0 || i === 12 || i === 13) {
+                var select = $('<select><option value=""></option></select>')
+                  .appendTo($(column.footer()).empty())
+                  .on('change', function () {
+                    var val = $.fn.dataTable.util.escapeRegex(
+                      $(this).val()
+                    );
+
+                    column
+                      .search(val ? '^' + val + '$' : '', true, false)
+                      .draw();
+                  });
+
+                column.data().unique().sort().each(function (d, j) {
+                  select.append('<option value="' + d + '">' + d + '</option>')
+                });
+              }
+            });
+
+
+          }
+        });
+      }
+
+
+
+
+
+
+
+
+      $(".toggle-vis").change(function (e) {
+
+        e.preventDefault();
+        //e.stopPropagation();
+
+        var t = this;
+        var column_num = $(this).attr('data-column');
+        // Get the column API object
+        Object.keys(tables).forEach(function (seq) {
+
+          var table = tables[seq];
+          var column = table.column(column_num);
+
+          try {
+            if (t.checked) {
+              column.visible(true);
+            } else {
+              column.visible(false);
+            }
+          }
+          catch (err) {
+          }
+
+        });
+
+      });
+
+
+    });
+  </script>
+
+  <script type="text/javascript">
+    function showCharts(dataset) {
+
+      let investArray = [];
+      dataset.reduce(function (res, value) {
+        if (!res[value.sector]) {
+          res[value.sector] = { name: value.sector, id: value.sector, y: 0, drilldown: value.sector, data: [] };
+          investArray.push(res[value.sector])
+        }
+        res[value.sector].y += value.totalcost;
+        res[value.sector].data.push([value.companycode, value.totalcost]);
+        return res;
+      }, {});
+
+      let investSeries = [{
+        name: "Investment",
+        colorByPoint: true,
+        data: investArray
+      }];
+
+      let investDrilldown = {
+        series: investArray
+      };
+
+
+      let voptions = {
+        type: 'pie',
+        elementId: "investmentPie",
+        title: "Investment",
+        subtitle: "Sector wise investment",
+        height: "100%",
+        seriesName: "Investment",
+        dataset: investSeries,
+        drildown: investDrilldown
+      }
+
+
+
+      let unrealizeProfitArray = [];
+      dataset.reduce(function (res, value) {
+        if (!res[value.sector]) {
+          res[value.sector] = { name: value.sector, id: value.sector, y: 0, drilldown: value.sector, data: [] };
+          unrealizeProfitArray.push(res[value.sector])
+        }
+        res[value.sector].y += value.unrealizedprofit;
+        res[value.sector].data.push([value.companycode, value.unrealizedprofit]);
+        return res;
+      }, {});
+
+      let unrealizeProfitSeries = [{
+        name: "unrealizeProfit",
+        colorByPoint: true,
+        data: unrealizeProfitArray
+      }];
+
+      let unrealizeProfitDrilldown = {
+        series: unrealizeProfitArray
+      };
+
+
+      let voptions2 = {
+        type: 'pie',
+        elementId: "unrealizedPie",
+        title: "Unrealized Profit",
+        subtitle: "Sector wise unrealize profit",
+        height: "100%",
+        seriesName: "unrealizeProfit",
+        dataset: unrealizeProfitSeries,
+        drildown: unrealizeProfitDrilldown
+      }
+
+      bindCharts(voptions);
+      bindCharts(voptions2);
+    }
+    //showCharts();
+
+    function bindCharts(options) {
+      //options.type
+      //options.elementId
+      //options.height
+      //options.title
+      // options.subtitle
+      //p.colors
+      //options.seriesName
+      // options.dataset
+      //options.drildown
+
+      // var vColors = [];
+      // if (typeof pColors !== 'undefined' && pColors.length > 0) {
+      //     vColors = pColors;
+      // } else {
+      //     vColors = ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'];
+      // }
+
+      // Highcharts.setOptions({
+      //     //colors: p.colors,
+      //     lang: {
+      //         numericSymbols: ["K", "M", "B", "T", "Qd", "Qn"]
+      //     }
+      // });
+
+      Highcharts.chart(options.elementId, {
+        chart: {
+          type: options.type,
+          options3d: {
+            enabled: options.is3d || false,
+            alpha: 45,
+            beta: 0
+          }
+        },
+        title: {
+          text: options.title    //'Browser market shares. January, 2018'
+        },
+        subtitle: {
+          text: options.subtitle   //'Click the slices to view versions. Source: <a href="http://statcounter.com" target="_blank">statcounter.com</a>'
+        },
+        credits: {
+          enabled: false
+        },
+        accessibility: {
+          announceNewData: {
+            enabled: true
+          },
+          point: {
+            valueSuffix: '%'
+          }
+        },
+
+        plotOptions: {
+          series: {
+            depth: options.depth3d,
+            dataLabels: {
+              enabled: true,
+              format: '{point.name}: {point.percentage:.1f}%'
+            }
+          }
+        },
+
+        tooltip: {
+          headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+          pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}</b> of total<br/>'
+        },
+        series: options.dataset,
+        drilldown: options.drildown
+      });
+    }
+
+  </script>
+</body>
+
+</html>
+
+
+
+<!--
+  <table id="example" class="display dataTable cell-border" style="width:100%">
+      <thead>
+       <tr><th>ID</th><th>Amount</th><th>Percent</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>123.4</td><td class="percent"></td></tr>
+        <tr><td>2</td><td>234.5</td><td class="percent"></td></tr>
+        <tr><td>3</td><td>543.21</td><td class="percent"></td></tr>
+        <tr><td>4</td><td>76</td><td class="percent"></td></tr>
+        <tr><td>5</td><td>87</td><td class="percent"></td></tr>
+      </tbody>
+    </table>
+    
+    </div>
+    
+    <script type="text/javascript">
+    
+      $(document).ready(function() {
+    
+        var table = $('#example').DataTable({
+    
+          // wait for table and data to finish being initialized:
+          "initComplete": function( settings, json ) {
+            populatePercentages();
+          }
+    
+        });
+    
+        function populatePercentages() {
+          var total = 0.0;
+    
+          // first calcuate the total:
+          $('#example').DataTable().rows().every( function ( rowIdx, tableLoop, rowLoop ) {
+            // assumes amounts are not null, all numeric, and are in column 2:
+            total = total + Number(this.data()[1]); 
+          });
+    
+          // then calculate the percentage for each row:
+          $('#example').DataTable().rows().every( function ( rowIdx, tableLoop, rowLoop ) {
+            var amount = this.data()[1];
+            // calculate percent to 2 decimal places:
+            var percentage = Math.round((amount / total) * 10000) / 100;
+            var cells = $('#example').DataTable().cells(rowIdx, 2);       
+            cells.every( function () {
+              this.data(percentage);
+            });
+    
+          });
+        }
+    
+      });
+    </script>
+
+
+    -->
